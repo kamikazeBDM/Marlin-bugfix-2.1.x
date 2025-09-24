@@ -178,6 +178,9 @@
 #define TEMP_1_PIN                          PF5   // TH1
 #define TEMP_2_PIN                          PF6   // TH2
 #define TEMP_3_PIN                          PF7   // TH3
+#define TEMP_CHAMBER_PIN                    TEMP_3_PIN
+
+
 
 #if TEMP_SENSOR_0_IS_MAX31865
   #define TEMP_0_CS_PIN                     PF8   // Max31865 CS
@@ -192,15 +195,19 @@
 // Heaters / Fans
 //
 #define HEATER_BED_PIN                      PA1   // Hotbed
+// HEATER_0
 #define HEATER_1_PIN                        PA3   // Heater1
+// HEATER_2
 #define HEATER_3_PIN                        PB11  // Heater3
 
-#define FAN0_PIN                            PA8   // Fan0
-#define FAN1_PIN                            PE5   // Fan1
-#define FAN2_PIN                            PD12  // Fan2
-#define FAN3_PIN                            PD13  // Fan3
-#define FAN4_PIN                            PD14  // Fan4
-#define FAN5_PIN                            PD15  // Fan5
+#define FAN0_PIN                            PA8   // Fan0   FILAMENT COOLER FAN
+#define FAN1_PIN                            PE5   // Fan1   PART COOLER FAN
+#define FAN2_PIN                            PD12  // Fan2   CASE FAN PIN
+
+#define FAN3_PIN                            PD13  // Fan3   -- blown pwn grounded out defaults to ON
+
+#define FAN4_PIN                            PD14  // Fan4   CASE LIGHT PIN  5V (?? used to be CHAMBER_AUTO_FAN_PIN??)
+#define FAN5_PIN                            PD15  // Fan5   CHAMBER_AUTO_FAN_PIN assign chamber auto fan 
 
 //
 // SD Support

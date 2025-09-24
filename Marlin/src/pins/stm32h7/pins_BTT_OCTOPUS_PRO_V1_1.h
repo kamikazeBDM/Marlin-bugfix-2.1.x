@@ -21,6 +21,10 @@
  */
 #pragma once
 
+#define DIAG_JUMPERS_REMOVED
+#define NO_AUTO_ASSIGN_WARNING
+#define NO_CONFIGURATION_EMBEDDING_WARNING
+
 #define BOARD_INFO_NAME   "BTT OCTOPUS PRO V1.1"
 
 #include "pins_BTT_OCTOPUS_PRO_V1_common.h"

@@ -1,0 +1,86 @@
+2025/05/12 
+
+Send: M503
+
+; Linear Units:
+  G21 ; (mm)
+  
+; Temperature Units:
+  M149 C ; Units in Celsius
+  
+; Filament settings (Disabled):
+  M200 S0
+  M200 T0 D1.7500
+  M200 T1 D1.7500
+  
+; Steps per unit:
+  M92 X81.0500 Y81.5500 Z403.5500
+  M92 T0 E400.0000
+  M92 T1 E400.0000
+  
+; Max feedrates (units/s):
+  M203 X300.0000 Y300.0000 Z15.0000
+  M203 T0 E300.0000
+  M203 T1 E300.0000
+  
+; Max Acceleration (units/s2):
+  M201 X3000.0000 Y3000.0000 Z300.0000
+  M201 T0 E10000.0000
+  M201 T1 E10000.0000
+  
+; Acceleration (units/s2) (P<print-accel> R<retract-accel> T<travel-accel>):
+  M204 P1000.0000 R3000.0000 T2500.0000
+  
+; Advanced (B<min_segment_time_us> S<min_feedrate> T<min_travel_feedrate> J<junc_dev>):
+  M205 B20000.0000 S0.0000 T0.0000 J0.0220
+  
+; Home offset:
+  M206 X0.0000 Y0.0000 Z0.0000
+  
+; Hotend offsets:
+  M218 T1 X-19.9700 Y-0.1000 Z0.000
+  
+; Material heatup parameters:
+  M145 S0 H230.0000 B60.0000 F0
+  M145 S1 H245.0000 B95.0000 F0
+  
+; Hotend PID:
+  M301 E0 P17.1585 I1.4116 D52.1403
+  M301 E1 P15.4397 I1.0324 D57.7252
+  
+; Bed PID:
+  M304 P143.7940 I28.0932 D490.6750
+  
+; Controller Fan:
+  M710 S255 I128 A1 D30 ; (100% 50%)
+  
+; Stepper driver current:
+  M906 X1600 Y1700 Z1100
+  M906 T0 E700
+  M906 T1 E680
+  
+; Hybrid Threshold:
+  M913 X216 Y216 Z14
+  M913 T0 E29
+  M913 T1 E29
+
+; Driver stepping mode:
+  M569 S1 X Y Z
+  
+; Input Shaping:
+  M593 X F40.0000 D0.1500
+  M593 Y F40.0000 D0.1500
+  
+; Linear Advance:
+  M900 T0 K0.0000
+  M900 T1 K0.0000
+  
+; Filament load/unload:
+  M603 T0 L80.0000 U125.0000 ; (mm)
+  M603 T1 L80.0000 U125.0000 ; (mm)
+  
+; Tool-changing:
+  M217 S12.0000 B0.0000 E0.0000 P276.0000 G0.0000 R3000.0000 U1500.0000 F255 D10 A0 L0.0000 Z2.0000
+
+
+
