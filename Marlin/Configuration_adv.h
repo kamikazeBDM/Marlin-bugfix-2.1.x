@@ -483,7 +483,7 @@
  * Enable Autotemp Mode with M104/M109 F<factor> S<mintemp> B<maxtemp>.
  * Disable by sending M104/M109 with no F parameter (or F0 with AUTOTEMP_PROPORTIONAL).
  */
-#define AUTOTEMP
+//#define AUTOTEMP
 #if ENABLED(AUTOTEMP)
   #define AUTOTEMP_OLDWEIGHT 0.98     // Factor used to weight previous readings (0.0 < value < 1.0)
   #define AUTOTEMP_MIN          210
@@ -579,7 +579,7 @@
  */
 #define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-  #define CONTROLLER_FAN_PIN FAN3_PIN           // Set a custom pin for the controller fan
+  #define CONTROLLER_FAN_PIN        FAN5_PIN     // Set a custom pin for the controller fan
   //#define CONTROLLER_FAN2_PIN -1          // Set a custom pin for second controller fan
   //#define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
   //#define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
@@ -701,16 +701,27 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN FAN1_PIN
-#define E1_AUTO_FAN_PIN FAN1_PIN
+#define E0_AUTO_FAN_PIN               FAN1_PIN
+#define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
 #define E4_AUTO_FAN_PIN -1
 #define E5_AUTO_FAN_PIN -1
 #define E6_AUTO_FAN_PIN -1
 #define E7_AUTO_FAN_PIN -1
-#define CHAMBER_AUTO_FAN_PIN    FAN5_PIN
+
+#define CHAMBER_AUTO_FAN_PIN          FAN2_PIN 
+
 #define COOLER_AUTO_FAN_PIN -1
+
+
+
+
+
+
+
+
+
 
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 40
 #define EXTRUDER_AUTO_FAN_SPEED 255   // 255 == full 
@@ -1263,24 +1274,33 @@
  */
 #define INPUT_SHAPING_X
 #define INPUT_SHAPING_Y
-//#define INPUT_SHAPING_Z
+#define INPUT_SHAPING_Z
 #if ANY(INPUT_SHAPING_X, INPUT_SHAPING_Y, INPUT_SHAPING_Z)
   #if ENABLED(INPUT_SHAPING_X)
     #define SHAPING_FREQ_X 40.0         // (Hz) The default dominant resonant frequency on the X axis.
-    #define SHAPING_ZETA_X 0.15         // Damping ratio of the X axis (range: 0.0 = no damping to 1.0 = critical damping).
+    #define SHAPING_ZETA_X 0.30         // Damping ratio of the X axis (range: 0.0 = no damping to 1.0 = critical damping).
   #endif
   #if ENABLED(INPUT_SHAPING_Y)
     #define SHAPING_FREQ_Y 40.0         // (Hz) The default dominant resonant frequency on the Y axis.
-    #define SHAPING_ZETA_Y 0.15         // Damping ratio of the Y axis (range: 0.0 = no damping to 1.0 = critical damping).
+    #define SHAPING_ZETA_Y 0.30         // Damping ratio of the Y axis (range: 0.0 = no damping to 1.0 = critical damping).
   #endif
   #if ENABLED(INPUT_SHAPING_Z)
     #define SHAPING_FREQ_Z  40.0        // (Hz) The default dominant resonant frequency on the Z axis.
-    #define SHAPING_ZETA_Z   0.15       // Damping ratio of the Z axis (range: 0.0 = no damping to 1.0 = critical damping).
+    #define SHAPING_ZETA_Z   0.30       // Damping ratio of the Z axis (range: 0.0 = no damping to 1.0 = critical damping).
   #endif
   //#define SHAPING_MIN_FREQ  20.0      // (Hz) By default the minimum of the shaping frequencies. Override to affect SRAM usage.
   //#define SHAPING_MAX_STEPRATE 10000  // By default the maximum total step rate of the shaped axes. Override to affect SRAM usage.
   #define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
 #endif
+
+
+
+
+
+
+
+
+
 
 // @section motion
 
@@ -1318,9 +1338,17 @@
 //#define DISABLE_IDLE_W
 #define DISABLE_IDLE_E    // Shut down all idle extruders
 
+
+
+
+
 // Default Minimum Feedrates for printing and travel moves
-#define DEFAULT_MINIMUMFEEDRATE 0.0           // (mm/s) Minimum feedrate. Set with M205 S.
+#define DEFAULT_MINIMUMFEEDRATE 3.0           // (mm/s) Minimum feedrate. Set with M205 S.
 #define DEFAULT_MINTRAVELFEEDRATE 0.0         // (mm/s) Minimum travel feedrate. Set with M205 T.
+
+
+
+
 
 // Minimum time that a segment needs to take as the buffer gets emptied
 #define DEFAULT_MINSEGMENTTIME 20000          // (µs) Set with M205 B.
@@ -1446,6 +1474,9 @@
   #endif
 #endif
 
+
+
+
 /**
  * Multi-stepping sends steps in bursts to reduce MCU usage for high step-rates.
  * This allows higher feedrates than the MCU could otherwise support.
@@ -1533,7 +1564,7 @@
 // @section lcd
 
 #if HAS_MANUAL_MOVE_MENU
-  #define MANUAL_FEEDRATE { 200*60, 200*60, 40*60, 4*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 200*60, 200*60, 50*60, 4*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
   #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
   #if IS_ULTIPANEL
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1617,8 +1648,8 @@
    * will be shown in the move submenus.
    */
 
-  #define MANUAL_MOVE_DISTANCE_MM                    10, 1.0, 0.1  // (mm)
-  //#define MANUAL_MOVE_DISTANCE_MM         100, 50, 10, 1.0, 0.1  // (mm)
+  //#define MANUAL_MOVE_DISTANCE_MM                    10, 1.0, 0.1  // (mm)
+  #define MANUAL_MOVE_DISTANCE_MM         100, 50, 10, 1.0, 0.1  // (mm)
   //#define MANUAL_MOVE_DISTANCE_MM    500, 100, 50, 10, 1.0, 0.1  // (mm)
 
   // Manual move distances for INCH_MODE_SUPPORT
@@ -1656,7 +1687,7 @@
    */
   #define SHOW_BOOTSCREEN                 // Show the Marlin bootscreen on startup. ** ENABLE FOR PRODUCTION **
   #if ENABLED(SHOW_BOOTSCREEN)
-    #define BOOTSCREEN_TIMEOUT 500       // (ms) Total Duration to display the boot screen(s)
+    #define BOOTSCREEN_TIMEOUT 200       // (ms) Total Duration to display the boot screen(s)
     #if ANY(HAS_MARLINUI_U8GLIB, TFT_COLOR_UI)
       #define BOOT_MARLIN_LOGO_SMALL      // Show a smaller Marlin logo on the Boot Screen (saving lots of flash)
     #endif
@@ -1690,7 +1721,7 @@
   #define STATUS_MESSAGE_SCROLLING
 
   // Apply a timeout to low-priority status messages
-  #define STATUS_MESSAGE_TIMEOUT_SEC 30 // (seconds)
+  #define STATUS_MESSAGE_TIMEOUT_SEC 10 // (seconds)
 
   // On the Info Screen, display XY with one decimal place when possible
   #define LCD_DECIMAL_SMALL_XY
@@ -1699,8 +1730,11 @@
   #define LCD_SHOW_E_TOTAL
 
   // Display a negative temperature instead of "err"
-  //#define SHOW_TEMPERATURE_BELOW_ZERO
+  #define SHOW_TEMPERATURE_BELOW_ZERO
 
+
+
+  
   /**
    * LED Control Menu
    * Add LED Control to the LCD menu
@@ -1709,6 +1743,7 @@
   #if ENABLED(LED_CONTROL_MENU)
     #define LED_COLOR_PRESETS                 // Enable the Preset Color menu option
     //#define NEO2_COLOR_PRESETS              // Enable a second NeoPixel Preset Color menu option
+
     #if ENABLED(LED_COLOR_PRESETS)
       #define LED_USER_PRESET_RED 255         // User defined RED value
       #define LED_USER_PRESET_GREEN 180       // User defined GREEN value
@@ -1745,7 +1780,7 @@
   #define SET_PROGRESS_PERCENT            // Add 'P' parameter to set percentage done
   #define SET_REMAINING_TIME              // Add 'R' parameter to set remaining time
   //#define SET_INTERACTION_TIME          // Add 'C' parameter to set time until next filament change or other user interaction
-  //#define M73_REPORT                    // Report M73 values to host
+  #define M73_REPORT                    // Report M73 values to host
   #if ALL(M73_REPORT, HAS_MEDIA)
     #define M73_REPORT_SD_ONLY            // Report only when printing from SD
   #endif
@@ -1979,6 +2014,9 @@
     #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
   #endif
 
+
+
+
   /**
    * Enable this option if you have more than ~3K of unused flash space.
    * Marlin will embed all settings in the firmware binary as compressed data.
@@ -1987,8 +2025,15 @@
    */
   #define CONFIGURATION_EMBEDDING
 
+
+
+
+
+
+
+
   // Add an optimized binary file transfer mode, initiated with 'M28 B1'
-  //#define BINARY_FILE_TRANSFER
+  #define BINARY_FILE_TRANSFER
 
   #if ENABLED(BINARY_FILE_TRANSFER)
     // Include extra facilities (e.g., 'M20 F') supporting firmware upload via BINARY_FILE_TRANSFER
@@ -2360,11 +2405,11 @@
   //#define EP_BABYSTEPPING                 // M293/M294 babystepping with EMERGENCY_PARSER support
   #define BABYSTEP_WITHOUT_HOMING
   #define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement)
-  //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
+  #define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false               // Enable if Z babysteps should go the other way
   #define BABYSTEP_MILLIMETER_UNITS       // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
-  #define BABYSTEP_MULTIPLICATOR_Z .1        // (steps or mm) Steps or millimeter distance for each Z babystep
-  #define BABYSTEP_MULTIPLICATOR_XY .1       // (steps or mm) Steps or millimeter distance for each XY babystep
+  #define BABYSTEP_MULTIPLICATOR_Z .01        // (steps or mm) Steps or millimeter distance for each Z babystep
+  #define BABYSTEP_MULTIPLICATOR_XY .01       // (steps or mm) Steps or millimeter distance for each XY babystep
 
   //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
@@ -2405,15 +2450,15 @@
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   #if ENABLED(DISTINCT_E_FACTORS)
-    #define ADVANCE_K { 0.00 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
+    #define ADVANCE_K 0.02     // (mm) Compression length per 1mm/s extruder speed, per extruder
   #else
-    #define ADVANCE_K { 0.00 }        // (mm) Compression length applying to all extruders
+    #define ADVANCE_K 0.02        // (mm) Compression length applying to all extruders
   #endif
   //#define ADVANCE_K_EXTRA       // Add a second linear advance constant, configurable with M900 L.
   //#define LA_DEBUG              // Print debug information to serial during operation. Disable for production use.
   //#define EXPERIMENTAL_I2S_LA   // Allow I2S_STEPPER_STREAM to be used with LA. Performance degrades as the LA step rate reaches ~20kHz.
 
-  //#define SMOOTH_LIN_ADVANCE    // Remove limits on acceleration by gradual increase of nozzle pressure
+  #define SMOOTH_LIN_ADVANCE    // Remove limits on acceleration by gradual increase of nozzle pressure
   #if ENABLED(SMOOTH_LIN_ADVANCE)
     /**
      * ADVANCE_TAU is also the time ahead that the smoother needs to look
@@ -2432,6 +2477,11 @@
   #endif
 #endif
 
+
+
+
+
+
 /**
  * Nonlinear Extrusion Control
  *
@@ -2439,10 +2489,20 @@
  * underextrusion at high extruder speeds that are otherwise well-behaved (i.e., not skipping).
  * For better results also enable ADAPTIVE_STEP_SMOOTHING.
  */
-//#define NONLINEAR_EXTRUSION
+#define NONLINEAR_EXTRUSION
 #if ENABLED(NONLINEAR_EXTRUSION)
-  //#define NONLINEAR_EXTRUSION_DEFAULT_ON    // Enable if NLE should be ON by default
+  #define NONLINEAR_EXTRUSION_DEFAULT_ON    // Enable if NLE should be ON by default
 #endif
+
+
+
+
+
+
+
+
+
+
 
 // @section leveling
 
@@ -2679,7 +2739,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE_NS 2000
+#define MINIMUM_STEPPER_PULSE_NS 100
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -2695,9 +2755,22 @@
  */
 #define MAXIMUM_STEPPER_RATE 5000000
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // @section temperature
 
-// Control heater 0 and heater 1 in parallel.
+// Control heater 0 and heater 1 in parallel. ( "EXTRUDERS must be 1 with HEATERS_PARALLEL.")
 //#define HEATERS_PARALLEL
 
 //===========================================================================
@@ -2719,7 +2792,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 4
+#define BUFSIZE 16
 
 /**
  * Host Transmit Buffer Size
@@ -2730,7 +2803,7 @@
  *  - Other output doesn't need to be that speedy.
  * :[0, 2, 4, 8, 16, 32, 64, 128, 256]
  */
-#define TX_BUFFER_SIZE 32
+#define TX_BUFFER_SIZE 128    
 
 /**
  * Host Receive Buffer Size
@@ -2738,7 +2811,7 @@
  * To use flow control, set this buffer size to at least 1024 bytes.
  * :[0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]
  */
-#define RX_BUFFER_SIZE 1024
+#define RX_BUFFER_SIZE 2048   // 2^2 must be power of 2 > MAX_CMD_SIZE (96) * BUFSIZE (16)
 
 #if RX_BUFFER_SIZE >= 1024
   // Enable to have the controller send XON/XOFF control characters to
@@ -2787,7 +2860,7 @@
  * - During Hold all Emergency Parser commands are available, as usual.
  * - Enable NANODLP_Z_SYNC and NANODLP_ALL_AXIS for move command end-state reports.
  */
-//#define REALTIME_REPORTING_COMMANDS
+#define REALTIME_REPORTING_COMMANDS
 #if ENABLED(REALTIME_REPORTING_COMMANDS)
   //#define FULL_REPORT_TO_HOST_FEATURE   // Auto-report the machine status like Grbl CNC
 #endif
@@ -2808,7 +2881,7 @@
 #define SERIAL_OVERRUN_PROTECTION
 
 // For serial echo, the number of digits after the decimal point
-#define SERIAL_FLOAT_PRECISION 4
+#define SERIAL_FLOAT_PRECISION 5
 
 /**
  * This feature is EXPERIMENTAL so use with caution and test thoroughly.
@@ -3078,7 +3151,7 @@
 
   #define HOLD_MULTIPLIER 0.5     // Scales down the holding current from run current
 
-  //#define EDITABLE_HOMING_CURRENT   // Add a G-code and menu to modify the Homing Current
+  #define EDITABLE_HOMING_CURRENT   // Add a G-code and menu to modify the Homing Current
 
   /**
    * Interpolate microsteps to 256
@@ -3095,12 +3168,12 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(X)
-    #define X_CURRENT 1250              // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_CURRENT_HOME ( X_CURRENT / 3 )   // (mA) RMS current for homing. (Typically lower than *_CURRENT.)
-    #define X_MICROSTEPS 16            // 0..256
+    #define X_CURRENT 1600              // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT_HOME ( X_CURRENT / 2 )   // (mA) RMS current for homing. (Typically lower than *_CURRENT.)
+    #define X_MICROSTEPS 32            // 0..256
     #define X_RSENSE 0.11
     #define X_CHAIN_POS -1             // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
-    //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+    #define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
     //#define X_HOLD_MULTIPLIER 0.5    // Enable to override 'HOLD_MULTIPLIER' for the X axis
   #endif
 
@@ -3115,12 +3188,12 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Y)
-    #define Y_CURRENT 1250
-    #define Y_CURRENT_HOME ( Y_CURRENT / 3 )
-    #define Y_MICROSTEPS 16
+    #define Y_CURRENT 1350
+    #define Y_CURRENT_HOME ( Y_CURRENT / 2 )
+    #define Y_MICROSTEPS 32
     #define Y_RSENSE 0.11
     #define Y_CHAIN_POS -1
-    //#define Y_INTERPOLATE  true
+    #define Y_INTERPOLATE  true
     //#define Y_HOLD_MULTIPLIER 0.5
   #endif
 
@@ -3135,12 +3208,12 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Z)
-    #define Z_CURRENT 950
+    #define Z_CURRENT 1350
     #define Z_CURRENT_HOME Z_CURRENT
-    #define Z_MICROSTEPS 16
+    #define Z_MICROSTEPS 32
     #define Z_RSENSE 0.11
     #define Z_CHAIN_POS -1
-    //#define Z_INTERPOLATE  true
+    #define Z_INTERPOLATE  true
     //#define Z_HOLD_MULTIPLIER 0.5
   #endif
 
@@ -3235,11 +3308,11 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(E0)
-    #define E0_CURRENT 810
-    #define E0_MICROSTEPS 16
+    #define E0_CURRENT 450
+    #define E0_MICROSTEPS 32
     #define E0_RSENSE 0.11
     #define E0_CHAIN_POS -1
-    //#define E0_INTERPOLATE true
+    #define E0_INTERPOLATE true
     //#define E0_HOLD_MULTIPLIER 0.5
   #endif
 
@@ -3415,7 +3488,7 @@
     #define STEALTHCHOP_U
     #define STEALTHCHOP_V
     #define STEALTHCHOP_W
-    #define STEALTHCHOP_E
+  //  #define STEALTHCHOP_E
   #endif
 
   /**
@@ -3473,9 +3546,9 @@
   #define MONITOR_DRIVER_STATUS
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
-    #define CURRENT_STEP_DOWN 50      // [mA]
+    #define CURRENT_STEP_DOWN 25      // [mA]
     #define REPORT_CURRENT_CHANGE
-    #define STOP_ON_ERROR
+    //#define STOP_ON_ERROR
   #endif
 
   // @section tmc/hybrid
@@ -3489,11 +3562,11 @@
    */
   #define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD 220      // [mm/s]
+  #define X_HYBRID_THRESHOLD 160      // [mm/s]
   #define X2_HYBRID_THRESHOLD 100
-  #define Y_HYBRID_THRESHOLD 220
+  #define Y_HYBRID_THRESHOLD 160
   #define Y2_HYBRID_THRESHOLD 100
-  #define Z_HYBRID_THRESHOLD 12
+  #define Z_HYBRID_THRESHOLD 9
   #define Z2_HYBRID_THRESHOLD 3
   #define Z3_HYBRID_THRESHOLD 3
   #define Z4_HYBRID_THRESHOLD 3
@@ -3503,7 +3576,7 @@
   #define U_HYBRID_THRESHOLD 3        // [mm/s]
   #define V_HYBRID_THRESHOLD 3
   #define W_HYBRID_THRESHOLD 3
-  #define E0_HYBRID_THRESHOLD 30
+  #define E0_HYBRID_THRESHOLD 300
   #define E1_HYBRID_THRESHOLD 30
   #define E2_HYBRID_THRESHOLD 30
   #define E3_HYBRID_THRESHOLD 30
@@ -3573,7 +3646,7 @@
    *
    * Values from 0..1023, -1 to disable homing phase for that axis.
    */
-   #define TMC_HOME_PHASE { 896, 896, 896 }
+   #define TMC_HOME_PHASE { 128, 128, 128 }
 
   /**
    * Step on both rising and falling edge signals (as with a square wave).
@@ -3876,6 +3949,22 @@
  */
 //#define LASER_SYNCHRONOUS_M106_M107
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Coolant Control
  *
@@ -3892,6 +3981,24 @@
 #endif
 
 // @section filament width
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Filament Width Sensor
@@ -3926,6 +4033,19 @@
   //#define FILAMENT_LCD_DISPLAY
 #endif
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // @section power
 
 /**
@@ -3937,8 +4057,8 @@
  * The current sensor feeds DC voltage (relative to the measured current) to an analog pin
  * The voltage sensor feeds DC voltage (relative to the measured voltage) to an analog pin
  */
-//#define POWER_MONITOR_CURRENT   // Monitor the system current
-//#define POWER_MONITOR_VOLTAGE   // Monitor the system voltage
+#define POWER_MONITOR_CURRENT   // Monitor the system current
+#define POWER_MONITOR_VOLTAGE   // Monitor the system voltage
 
 #if ENABLED(POWER_MONITOR_CURRENT)
   #define POWER_MONITOR_VOLTS_PER_AMP    0.05000  // Input voltage to the MCU analog pin per amp  - DO NOT apply more than ADC_VREF!
@@ -3950,6 +4070,20 @@
   #define POWER_MONITOR_VOLTS_PER_VOLT  0.077933  // Input voltage to the MCU analog pin per volt - DO NOT apply more than ADC_VREF!
   #define POWER_MONITOR_VOLTAGE_OFFSET  0         // Offset (in volts) applied to the calculated voltage
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // @section safety
 
@@ -4011,6 +4145,20 @@
     #define VOLUMETRIC_EXTRUDER_LIMIT_MAX     20        // (mm^3/sec)
   #endif
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // @section reporting
 
@@ -4082,7 +4230,7 @@
  * Enable M111 debug flags 1=ECHO, 2=INFO, 4=ERRORS (unimplemented).
  * Disable to save some flash. Some hosts (Repetier Host) may rely on this feature.
  */
-#define DEBUG_FLAGS_GCODE
+//#define DEBUG_FLAGS_GCODE
 
 /**
  * Enable this option for a leaner build of Marlin that removes
@@ -4129,6 +4277,18 @@
   #define GCODE_MACROS_SLOTS       5  // Up to 10 may be used
   #define GCODE_MACROS_SLOT_SIZE  50  // Maximum length of a single macro
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * User-defined menu items to run custom G-code.
@@ -4232,6 +4392,17 @@
   #endif
 #endif
 
+
+
+
+
+
+
+
+
+
+
+
 // @section host
 
 /**
@@ -4266,7 +4437,7 @@
  *
  * Implement M486 to allow Marlin to skip objects
  */
-#define CANCEL_OBJECTS
+//#define CANCEL_OBJECTS
 #if ENABLED(CANCEL_OBJECTS)
   #define CANCEL_OBJECTS_REPORTING // Emit the current object as a status message
 #endif
@@ -4721,7 +4892,7 @@
 //
 // M100 Free Memory Watcher to debug memory usage
 //
-//#define M100_FREE_MEMORY_WATCHER
+#define M100_FREE_MEMORY_WATCHER
 
 //
 // M42 - Set pin states
@@ -4757,11 +4928,11 @@
 /**
  * Software Reset options
  */
-//#define SOFT_RESET_VIA_SERIAL         // 'KILL' and '^X' commands will soft-reset the controller
+#define SOFT_RESET_VIA_SERIAL         // 'KILL' and '^X' commands will soft-reset the controller
 //#define SOFT_RESET_ON_KILL            // Use a digital button to soft-reset the controller after KILL
 
 // Report uncleaned reset reason from register r2 instead of MCUSR. Supported by Optiboot on AVR.
-//#define OPTIBOOT_RESET_REASON
+#define OPTIBOOT_RESET_REASON
 
 // Shrink the build for smaller boards by sacrificing some serial feedback
 //#define MARLIN_SMALL_BUILD

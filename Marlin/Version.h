@@ -30,6 +30,7 @@
  */
 //#define SHORT_BUILD_VERSION "bugfix-2.1.3"
 
+// BTT TFT V3.0 E3.28
 // BOARD NAME: BOARD_BTT_OCTOPUS_PRO_V1_1    6008  
 // BigTreeTech Octopus Pro v1.1 (STM32H723ZE)
 
@@ -41,11 +42,11 @@
  * Marlin LTS 2.1.3.x (bugfix)
  * Compiled version identifier
  ************************************/
-#define COMPILE_VERSION "04"
+#define COMPILE_VERSION "16"
 
-//#define SHORT_BUILD_VERSION "bugfix-2.1.3 " COMPILE_VERSION
+#define SHORT_BUILD_VERSION "bugfix-2.1.3 " COMPILE_VERSION
 #define STRING_CONFIG_H_AUTHOR "BDM"                    // Who made the changes.
-#define CUSTOM_MACHINE_NAME "BTT OCTOPUS PRO v1.1 TMC-2209"     // Name displayed in the LCD "Ready" message and Info menu
+#define CUSTOM_MACHINE_NAME "OCTOPUS PROv1.1 TMC2209"     // Name displayed in the LCD "Ready" message and Info menu
 #define MACHINE_NAME "Ender 3 Pro"
 
 /*******************************************************************************************************
@@ -55,12 +56,122 @@
  * !! BOARD_BTT_OCTOPUS_PRO_V1_1  <-- BUILD TARGET
  * !! BigTreeTech Octopus Pro V1.1 (STM32H723ZE ARM Cortex-M4)
  * !! GitHub: kamikazebdm@gmail.com
+ * 
+ * V20  10/26/2025 15:37
  *
- * V04  09/24/2025 11:17
+ * V19  10/26/2025 15:37
+ * 
+ * V18  10/26/2025 15:37
+ * 
+ * V17  10/26/2025 15:37
+ * 
+ * V16  11/13/2025 12:00
+ *           
+ * 
+ * V15  10/26/2025 15:37
+ *      *** ANOTHER NEW MAIN BOARD ($64) - FIXES BLOWN FAN PWM PINS.
+ * 
+ *    
+ * V14  10/23/2025 16:52
+ *      Blown Part Cooler PIN - 
+ *      Switch PCooler PIN to CASE FAN PIN
+ * 
+ * V13  10/05/2025 10:05
+ * 
+ *      RE-ENABLED: THERMAL_PROTECTION_BED
+ *      Stepper Drive Current *(HOMING) Increased
+ *      INVERT: E0 Stepper - Changed to Right Side Extruder and Motor.
+ *              #define INVERT_E0_DIR false
+ * 
+ *      M304 P146.71030 I28.65990 D500.67331
+ *      M306 E0 P40.00 C16.70 R0.2200 A0.0680 F0.0970 H0.0056
+ * 
+ * V12  10/04/2025 22:00
+ *     RESET BED PID, RESET EEPROM DURING New BUILD. (temporarily)
+ *      ** DISABLED: THERMAL_PROTECTION_BED - temporarily
+ *      
+ *      BED Thermistor Pin Broken. Bad Wiring for bed 4 pin aviation plug. 
+ *          PIN 1-4  AC OUT TO BED HEATER
+ *          PIN 2-3  !! THERMISTOR !!
+ *          ** Moved BED TH PIN to  TEMP_2_PIN   PF6   // TH2    >> NEW BED TH <<
+ *   
+ * V11  09/30/2025 14:30
+ *      REMOVED More Dual Extruder config.
+ *      
+ * V10  09/30/2025 10:57
+ *      REMOVED Dual Extruder config.
+ *      #define TEMP_SENSOR_0 1047 
+ * 
+ * V09  09/29/2025 15:35
+ *      PT-1000 Thermistor HE0
+ *      REMOVED: #define AUTOTEMP ( was adding 5 degrees to filament temp )
+ * 
+ *      Model predictive control:
+ *      M306 E0 P40.00 C12.47 R0.2608 A0.0594 F0.0848 H0.0056
+ *
+ * 
+ * V08  09/28/2025 16:00
+ *      FIXED CONTROLLER FAN / CASE LIGHT PIN Conflicts
+ *      Updated some M92 Settings.
+ * 
+ * V07  09/27/2025 12:00
+ * 
+ *      BAUDRATE    - 500000
+ *          ** USE /dev/ttyAMA0 
+ * 
+ *          FOR RPi5 you need this in /boot/firmware/config.txt
+ *          also use raspi-config -  enable serial - disable console on serial
+ *          dtoverlay=dwc2,dr_mode=host
+ *          dtoverlay=uart0
+ *
+ *          [all]
+ *          # enable raspicam
+ *          start_x=1
+ *          gpu_mem=128
+ *           
+ *          dtparam=uart0=on * 
+ * 
+ *          #define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
+ *
+ *
+ * V06  09/26/2025 12:05
+ * 
+ *      BAUDRATE    - 500000
+ *          ** USE /dev/ttyAMA0 
+ * 
+ *          FOR RPi5 you need this in /boot/firmware/config.txt
+ *          also use raspi-config -  enable serial - disable console on serial
+ *          dtoverlay=dwc2,dr_mode=host
+ *          dtoverlay=uart0
+ *
+ *          [all]
+ *          # enable raspicam
+ *          start_x=1
+ *          gpu_mem=128
+ *           
+ *          dtparam=uart0=on
+ *
+ *      Changes to fully accomodate BigTreeTech_TFT35_E3_V3.0
+ *          -- enable additional serial ports of TFT35. 
+ *      ** INSTALL: new RPi5 2GB Ram, 
+ *      #define RX_BUFFER_SIZE 2048 
+ *      #define MAX_CMD_SIZE 96
+ *      #define BUFSIZE 16
+ *      #define TX_BUFFER_SIZE 128  
+ * 
+ * V05  09/25/2025 13:55
+ * 
+ *      TESTING serial port issues... RPi3b may have lost SERIAL - TX pin.
+ * 
+ * 
+ * 
+ * V04  09/24/2025 15:11
+ * 
  *      FAN3_PIN = BLOWN PIN - gounded and stuck ON.        ** DAMAGED **
  *      CASE LIGHT PWM - FAN4_PIN   (5V PWM) - controls case light ground
- *      CHAMBER_AUTO_FAN_PIN - FAN5_PIN
- *      BAUDRATE    - 115,200
+ *      BAUDRATE    - 115200
+ *      #define CHAMBER_AUTO_FAN_PIN          FAN2_PIN 
+ *      REMOVED:   #define CONFIGURATION_EMBEDDING
  * 
  * V03  09/23/2025 17:55
  * 
@@ -89,6 +200,19 @@
  *
  *
  */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*******************************************************************************************************
@@ -123,6 +247,23 @@
  *      !! with BTT Octopus Pro v1.0 board.
  *      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  *
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * V07  03/04/2022 12:42
  *
  *      UPDATES: MARLIN upstream bugfix-2.0(.9.3)  03/04/2022
